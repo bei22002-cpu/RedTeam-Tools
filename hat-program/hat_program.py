@@ -40,6 +40,7 @@ from modules.web_scanner import web_scanner_menu
 from modules.crypto_toolkit import crypto_toolkit_menu
 from modules.auto_recon import auto_recon_menu
 from modules.dashboard import dashboard_menu
+from modules.client_finder import client_finder_menu
 
 
 MAIN_BANNER = f"""
@@ -139,6 +140,7 @@ def main():
         f"{Colors.CYAN}Incident Response{Colors.RESET} - Live Triage, Forensics, IOC Scanning",
         f"{Colors.CYAN}Report Generator{Colors.RESET}  - HTML/Text Reports, Compliance Scoring",
         f"{Colors.CYAN}Dashboard{Colors.RESET}        - Security Posture, Health Check, Scorecard",
+        f"{Colors.YELLOW}Client Finder{Colors.RESET}    - Find Prospects, Audit Domains, Outreach Tools",
         "System Information",
         "About",
     ]
@@ -172,8 +174,10 @@ def main():
             elif choice == 11:
                 dashboard_menu()
             elif choice == 12:
-                show_system_info()
+                client_finder_menu()
             elif choice == 13:
+                show_system_info()
+            elif choice == 14:
                 about_screen()
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Interrupted. Returning to main menu...{Colors.RESET}")
