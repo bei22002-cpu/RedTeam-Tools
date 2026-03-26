@@ -5,7 +5,6 @@ Uses Linux system utilities for monitoring, auditing, and security hardening.
 
 from modules.utils import (
     Colors,
-    print_banner,
     print_section,
     print_info,
     print_warning,
@@ -16,7 +15,6 @@ from modules.utils import (
     require_root,
     get_user_input,
     display_menu,
-    confirm_action,
     check_required_tools,
 )
 

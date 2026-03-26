@@ -5,7 +5,6 @@ Uses Linux networking and scanning utilities for reconnaissance and assessment.
 
 from modules.utils import (
     Colors,
-    print_banner,
     print_section,
     print_info,
     print_warning,
@@ -15,10 +14,8 @@ from modules.utils import (
     check_tool,
     require_root,
     get_user_input,
-    validate_ip,
     validate_port,
     display_menu,
-    confirm_action,
     check_required_tools,
 )
 
