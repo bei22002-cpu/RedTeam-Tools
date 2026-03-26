@@ -32,6 +32,14 @@ from modules.utils import (
 from modules.red_hat import red_hat_menu
 from modules.blue_hat import blue_hat_menu
 from modules.black_hat import black_hat_menu
+from modules.report_generator import report_menu
+from modules.vulnerability_scanner import vuln_scanner_menu
+from modules.incident_response import incident_response_menu
+from modules.threat_intel import threat_intel_menu
+from modules.web_scanner import web_scanner_menu
+from modules.crypto_toolkit import crypto_toolkit_menu
+from modules.auto_recon import auto_recon_menu
+from modules.dashboard import dashboard_menu
 
 
 MAIN_BANNER = f"""
@@ -44,6 +52,8 @@ MAIN_BANNER = f"""
     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝     ╚═╝
 {Colors.RESET}
     {Colors.RED}[RED]{Colors.RESET} Offensive Security  |  {Colors.BLUE}[BLUE]{Colors.RESET} Defensive Security  |  {Colors.MAGENTA}[BLACK]{Colors.RESET} Threat Simulation
+
+    {Colors.GREEN}[TOOLS]{Colors.RESET} Vuln Scanner | Web Scanner | Crypto | OSINT | Recon | IR | Reports | Dashboard
 
     {Colors.YELLOW}For educational and authorized use only.{Colors.RESET}
 """
@@ -78,7 +88,7 @@ def about_screen():
     print_banner("About Hat Program", Colors.CYAN)
     print(f"""
   {Colors.BOLD}Red/Black/Blue Hat Cybersecurity Program{Colors.RESET}
-  Version: 1.0.0
+  Version: 2.0.0
 
   A comprehensive, menu-driven cybersecurity toolkit for Linux systems
   that integrates offensive, defensive, and educational security tools.
@@ -100,6 +110,11 @@ def about_screen():
     reverse shell generation (authorized testing), payload encoding,
     steganography detection, and metadata extraction.
 
+  {Colors.GREEN}{Colors.BOLD}ADDITIONAL MODULES:{Colors.RESET}
+    Vulnerability Scanner, Web Application Scanner, Cryptography Toolkit,
+    Threat Intelligence & OSINT, Auto-Reconnaissance, Incident Response,
+    Report Generator, and Security Dashboard with scoring.
+
   {Colors.YELLOW}Disclaimer:{Colors.RESET}
     This tool is provided for educational and authorized security
     testing purposes only. Unauthorized access to computer systems
@@ -113,9 +128,17 @@ def main():
     show_system_info()
 
     options = [
-        f"{Colors.RED}Red Hat{Colors.RESET}   - Offensive Security / Penetration Testing",
-        f"{Colors.BLUE}Blue Hat{Colors.RESET}  - Defensive Security / Monitoring & Hardening",
-        f"{Colors.MAGENTA}Black Hat{Colors.RESET} - Threat Simulation / Security Awareness",
+        f"{Colors.RED}Red Hat{Colors.RESET}        - Offensive Security / Penetration Testing",
+        f"{Colors.BLUE}Blue Hat{Colors.RESET}       - Defensive Security / Monitoring & Hardening",
+        f"{Colors.MAGENTA}Black Hat{Colors.RESET}      - Threat Simulation / Security Awareness",
+        f"{Colors.GREEN}Vuln Scanner{Colors.RESET}   - CVE Checks, Config Audits, SSL/Docker/Kernel",
+        f"{Colors.GREEN}Web Scanner{Colors.RESET}    - Directory Discovery, Headers, WAF, CMS, Tech",
+        f"{Colors.GREEN}Crypto Toolkit{Colors.RESET} - Hashing, Encryption, Certificates, SSH Keys",
+        f"{Colors.GREEN}Threat Intel{Colors.RESET}   - IP Reputation, OSINT, Threat Feeds, Breaches",
+        f"{Colors.GREEN}Auto Recon{Colors.RESET}     - Automated Reconnaissance Pipelines",
+        f"{Colors.CYAN}Incident Response{Colors.RESET} - Live Triage, Forensics, IOC Scanning",
+        f"{Colors.CYAN}Report Generator{Colors.RESET}  - HTML/Text Reports, Compliance Scoring",
+        f"{Colors.CYAN}Dashboard{Colors.RESET}        - Security Posture, Health Check, Scorecard",
         "System Information",
         "About",
     ]
@@ -133,8 +156,24 @@ def main():
             elif choice == 3:
                 black_hat_menu()
             elif choice == 4:
-                show_system_info()
+                vuln_scanner_menu()
             elif choice == 5:
+                web_scanner_menu()
+            elif choice == 6:
+                crypto_toolkit_menu()
+            elif choice == 7:
+                threat_intel_menu()
+            elif choice == 8:
+                auto_recon_menu()
+            elif choice == 9:
+                incident_response_menu()
+            elif choice == 10:
+                report_menu()
+            elif choice == 11:
+                dashboard_menu()
+            elif choice == 12:
+                show_system_info()
+            elif choice == 13:
                 about_screen()
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Interrupted. Returning to main menu...{Colors.RESET}")
