@@ -42,6 +42,14 @@ from modules.crypto_toolkit import crypto_toolkit_menu
 from modules.auto_recon import auto_recon_menu
 from modules.dashboard import dashboard_menu
 from modules.client_finder import client_finder_menu
+from modules.bluetooth_scanner import bluetooth_scanner
+from modules.wifi_attacks import wifi_attack_suite
+from modules.forensics_malware import forensics_malware
+from modules.evasion_tunneling import evasion_tunneling
+from modules.ad_ldap import ad_ldap_tools
+from modules.advanced_exploitation import advanced_exploitation
+from modules.social_engineering import social_engineering
+from modules.api_security import api_security_scanner
 
 
 MAIN_BANNER = f"""
@@ -56,6 +64,8 @@ MAIN_BANNER = f"""
     {Colors.RED}[RED]{Colors.RESET} Offensive Security  |  {Colors.BLUE}[BLUE]{Colors.RESET} Defensive Security  |  {Colors.MAGENTA}[BLACK]{Colors.RESET} Threat Simulation
 
     {Colors.GREEN}[TOOLS]{Colors.RESET} Vuln Scanner | Web Scanner | Crypto | OSINT | Recon | IR | Reports | Dashboard
+
+    {Colors.RED}[ADV]{Colors.RESET} Bluetooth | WiFi | Forensics | Evasion | AD/LDAP | Exploitation | SE | API
 
     {Colors.YELLOW}For educational and authorized use only.{Colors.RESET}
 """
@@ -91,7 +101,7 @@ def about_screen():
     print_banner("About Hat Program", Colors.CYAN)
     print(f"""
   {Colors.BOLD}Red/Black/Blue Hat Cybersecurity Program{Colors.RESET}
-  Version: 2.0.0
+  Version: 3.0.0
 
   A comprehensive, menu-driven cybersecurity toolkit for Linux systems
   that integrates offensive, defensive, and educational security tools.
@@ -118,6 +128,11 @@ def about_screen():
     Threat Intelligence & OSINT, Auto-Reconnaissance, Incident Response,
     Report Generator, and Security Dashboard with scoring.
 
+  {Colors.RED}{Colors.BOLD}ADVANCED MODULES (v3.0):{Colors.RESET}
+    Bluetooth & BLE Scanner, WiFi Attack Suite, Forensics & Malware Analysis,
+    Firewall Evasion & Tunneling, Active Directory & LDAP, Advanced Exploitation,
+    Social Engineering Toolkit, and API Security Scanner.
+
   {Colors.YELLOW}Disclaimer:{Colors.RESET}
     This tool is provided for educational and authorized security
     testing purposes only. Unauthorized access to computer systems
@@ -143,6 +158,14 @@ def main():
         f"{Colors.CYAN}Report Generator{Colors.RESET}  - HTML/Text Reports, Compliance Scoring",
         f"{Colors.CYAN}Dashboard{Colors.RESET}        - Security Posture, Health Check, Scorecard",
         f"{Colors.YELLOW}Client Finder{Colors.RESET}    - Find Prospects, Audit Domains, Outreach Tools",
+        f"{Colors.RED}Bluetooth Scanner{Colors.RESET} - BLE/Classic Scan, RFCOMM, OBEX, Signal Monitor",
+        f"{Colors.RED}WiFi Attack Suite{Colors.RESET} - Deauth, Evil Twin, WPS, PMKID, Handshake Crack",
+        f"{Colors.RED}Forensics & Malware{Colors.RESET} - PE/ELF Analysis, YARA, Memory, Disk Forensics",
+        f"{Colors.RED}Evasion & Tunneling{Colors.RESET} - SSH Tunnel, DNS Tunnel, Proxy Chains, Covert",
+        f"{Colors.MAGENTA}AD & LDAP Tools{Colors.RESET}   - Kerberoast, PTH, BloodHound, SMB, NTLM Relay",
+        f"{Colors.RED}Exploitation{Colors.RESET}       - Buffer Overflow, Shellcode, ROP, Fuzzing",
+        f"{Colors.RED}Social Engineering{Colors.RESET} - Phishing, Pretexting, USB Payloads, Vishing",
+        f"{Colors.CYAN}API Security{Colors.RESET}       - REST/GraphQL, JWT, SQLi, CORS, SSRF, Fuzzing",
         "System Information",
         "About",
     ]
@@ -178,8 +201,24 @@ def main():
             elif choice == 12:
                 client_finder_menu()
             elif choice == 13:
-                show_system_info()
+                bluetooth_scanner()
             elif choice == 14:
+                wifi_attack_suite()
+            elif choice == 15:
+                forensics_malware()
+            elif choice == 16:
+                evasion_tunneling()
+            elif choice == 17:
+                ad_ldap_tools()
+            elif choice == 18:
+                advanced_exploitation()
+            elif choice == 19:
+                social_engineering()
+            elif choice == 20:
+                api_security_scanner()
+            elif choice == 21:
+                show_system_info()
+            elif choice == 22:
                 about_screen()
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Interrupted. Returning to main menu...{Colors.RESET}")
