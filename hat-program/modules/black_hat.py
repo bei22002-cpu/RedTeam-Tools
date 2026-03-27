@@ -306,7 +306,10 @@ def _identify_and_crack():
               "computer","killer","ninja","magic","mustang","jordan","secret","hunter",
               "ranger","buster","soccer","hockey","harley","summer","winter","flower",
               "1234","12345","0000","1111","666666","7777777","matrix","batman","gandalf",
-              "P@ssw0rd","Passw0rd!","Admin123!","Welcome1","changeme"]
+              "P@ssw0rd","Passw0rd!","Admin123!","Welcome1","changeme",
+              "test","user","guest","login","pass","demo","info","data","server","linux",
+              "apple","orange","love","god","sex","money","power","trust","death","life",
+              "football","baseball","michael","thomas","george","robert","purple","gold"]
     found = False
     checked = 0
     start = time.time()
