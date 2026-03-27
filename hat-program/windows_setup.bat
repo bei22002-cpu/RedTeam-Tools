@@ -60,29 +60,28 @@ if %errorlevel% neq 0 (
 )
 
 :check_ubuntu
-:: Check if Ubuntu is available
-wsl -l -q 2>nul | findstr /i "Ubuntu" >nul 2>&1
+:: Check if Ubuntu is available (try running a command in it)
+wsl -d Ubuntu echo "Ubuntu check" >nul 2>&1
 if %errorlevel% equ 0 (
     echo  [+] Ubuntu is already installed in WSL.
     goto :setup_program
 )
 
 echo  [*] Installing Ubuntu in WSL...
-wsl --install -d Ubuntu --no-launch
-if %errorlevel% neq 0 (
-    echo  [!] Ubuntu installation started. You may need to restart
-    echo      your computer and run this script again.
-    pause
-    exit /b 0
+wsl --install -d Ubuntu --no-launch 2>nul
+:: Even if the command "fails", Ubuntu may already exist - check again
+wsl -d Ubuntu echo "Ubuntu check" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo  [+] Ubuntu is ready.
+    goto :setup_program
 )
 
-:: Initialize Ubuntu (first run sets up the default user)
 echo.
-echo  [*] Initializing Ubuntu...
-echo  [*] You will be asked to create a Linux username and password.
-echo      Remember these - you will need them for sudo commands.
+echo  [!] Ubuntu needs to be initialized. You may need to restart
+echo      your computer, then run this script again.
 echo.
-wsl -d Ubuntu echo "Ubuntu initialized successfully"
+pause
+exit /b 0
 
 :setup_program
 echo.
