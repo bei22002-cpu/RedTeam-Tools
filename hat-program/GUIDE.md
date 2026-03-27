@@ -106,24 +106,26 @@ This is the entry point. Run it and you get a menu with 14 options. Type a numbe
 
 ## Module 3: Black Hat - Threat Simulation (`black_hat.py`)
 
-**Purpose:** Educational tools that demonstrate common attack techniques. **For authorized testing only.**
+**Purpose:** Fully functional offensive security tools for authorized penetration testing and threat simulation. All tools execute real operations.
 
-| # | Tool | What It Does | Example Use |
-|---|------|-------------|-------------|
-| 1 | Password Analyzer | Scores password strength (length, complexity, entropy, common patterns) | Test if `MyP@ss123!` is strong enough |
-| 2 | Hash Cracker | Identifies hash types and tries common passwords against them | Paste an MD5 hash, it tries to crack it |
-| 3 | Packet Capture | Captures live network packets with tcpdump/tshark | See traffic on your network in real-time |
-| 4 | ARP Inspection | Checks ARP table for duplicate MACs (spoofing detection) | Detect man-in-the-middle attacks |
-| 5 | Wireless Discovery | Finds wireless interfaces and scans for nearby Wi-Fi networks | See all Wi-Fi networks around you |
-| 6 | Exploit Search | Searches exploit databases (searchsploit, NVD) for known vulnerabilities | Search for `apache 2.4` exploits |
-| 7 | Reverse Shell Gen | Generates reverse shell one-liners in Bash, Python, PHP, etc. | For authorized pen testing engagements |
-| 8 | Payload Encoding | Demonstrates Base64/hex encoding of payloads | See how attackers obfuscate commands |
-| 9 | Stego Detection | Detects hidden data in image files | Check if images contain hidden messages |
-| 10 | Metadata Extraction | Pulls metadata from files (EXIF, PDF info, etc.) | Find GPS coordinates, author info in photos/docs |
-| 11 | Tool Check | Shows which offensive tools are installed | Lists hashcat, john, metasploit, etc. |
+| # | Tool | Sub-tools | What It Does |
+|---|------|-----------|-------------|
+| 1 | Password Analyzer & Generator | Strength analysis, wordlist check, password generator, crack time estimator | Analyzes passwords with entropy scoring, checks against wordlists (rockyou.txt), generates secure passwords/passphrases, estimates brute-force time at CPU/GPU speeds |
+| 2 | Hash Cracker | Identify & crack, generate hashes, custom wordlist, brute-force, hashcat, john | Identifies hash types by length, runs dictionary attacks with mutations, brute-force (itertools), integrates with hashcat GPU cracking and John the Ripper |
+| 3 | Packet Capture & Analysis | Live capture, save to PCAP, filtered capture, analyze PCAP, HTTP capture, DNS capture | Real packet capture with tcpdump/tshark, saves PCAP files, BPF filters, protocol hierarchy analysis, HTTP and DNS traffic isolation |
+| 4 | ARP Inspection & Monitoring | View table, detect spoofing, monitor changes, verify gateway | Reads real ARP table, detects duplicate MACs (spoofing), monitors ARP changes over time, verifies gateway MAC authenticity |
+| 5 | Wireless Discovery & Scanning | List interfaces, scan networks, interface details, monitor mode, handshake capture | Uses iw/nmcli to scan WiFi networks, enables/disables monitor mode, captures WPA handshakes with airodump-ng |
+| 6 | Exploit Search & Download | searchsploit, NVD CVE search, download exploit, search by version | Searches exploit-db via searchsploit, queries NVD REST API for CVEs, downloads exploits by ID, searches by software+version |
+| 7 | Reverse Shell Generator & Listener | Reverse shells, bind shells, netcat listener, msfvenom, PowerShell, encoded shells | Generates one-liners in 10+ languages (bash/python/perl/php/ruby/socat/lua), starts real netcat listeners, msfvenom payloads, PowerShell encoded shells |
+| 8 | Payload Encoding & Obfuscation | Encode all formats, decode, multi-layer, XOR, file encoding, obfuscated scripts | Encodes in base64/hex/URL/ROT13/octal/binary/unicode/HTML, multi-layer chaining, XOR encrypt/decrypt, file encoding, generates obfuscated script wrappers |
+| 9 | Steganography Toolkit | Detect, hide, extract, binwalk analyze, binwalk extract, LSB analysis, append data | Detects hidden data with steghide/binwalk/strings, hides/extracts data in images, LSB statistical analysis, entropy analysis, appends hidden data to files |
+| 10 | Metadata Extraction & Stripping | Extract all, strip metadata, GPS extraction, batch processing, compare files | Full exiftool integration for EXIF/metadata, strips metadata clean, extracts GPS with Google Maps link, batch directory scanning, metadata comparison between files |
+| 11 | Network Sniffing & Protocol Analysis | Credential sniffing, DNS monitoring, ARP monitoring, protocol analysis, URL extraction | Sniffs plaintext credentials on HTTP/FTP/Telnet, monitors DNS queries, ARP traffic, full protocol hierarchy analysis with tshark, extracts URLs from traffic |
+| 12 | Tool Check | Availability scan, auto-install | Checks 35+ offensive tools (nmap, hashcat, john, metasploit, aircrack-ng, etc.), offers to install missing tools via apt |
 
-**Best for:** Security awareness training, authorized penetration testing.
-**Needs root?** Yes for packet capture and wireless scanning.
+**Best for:** Authorized penetration testing, red team engagements, security research.
+**Needs root?** Yes for packet capture, wireless scanning, network sniffing, and listener operations.
+**72 functions** across 12 tool categories with full sub-menus.
 
 ---
 
