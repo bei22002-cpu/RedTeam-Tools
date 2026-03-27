@@ -30,16 +30,14 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Get the directory this script is in
+:: Get the full path to hat_program.py (same folder as this .bat file)
 set "SCRIPT_DIR=%~dp0"
+set "PROGRAM=%SCRIPT_DIR%hat_program.py"
 
-:: Convert Windows path to WSL path
-for /f "tokens=*" %%i in ('wsl -d Ubuntu wslpath -a "%SCRIPT_DIR%"') do set "WSL_PATH=%%i"
-
-:: Launch the program
+:: Launch the program using the full Windows path passed to WSL
 echo.
 echo  Starting Hat Program in WSL...
 echo.
-wsl -d Ubuntu bash -c "cd '%WSL_PATH%' && python3 hat_program.py"
+wsl -d Ubuntu bash -c "python3 \"$(wslpath '%PROGRAM%')\""
 
 pause
