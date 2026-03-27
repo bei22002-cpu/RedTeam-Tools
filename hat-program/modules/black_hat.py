@@ -494,19 +494,33 @@ def _capture_live():
         print_error("tcpdump or tshark required. Install: sudo apt install tcpdump")
         return
     iface = get_user_input("Interface", "any")
-    count = get_user_input("Packet count", "50")
-    if not confirm_action("Capture %s packets on %s?" % (count, iface)):
+    count = get_user_input("Packet count (or 0 for time-based)", "20")
+    duration = get_user_input("Duration in seconds (max wait time)", "10")
+    try:
+        dur = int(duration)
+        cnt = int(count)
+    except ValueError:
+        dur, cnt = 10, 20
+    if not confirm_action("Capture on %s for up to %ds (max %s packets)?" % (iface, dur, cnt)):
         return
     tool = "tcpdump" if check_tool("tcpdump") else "tshark"
     if tool == "tcpdump":
-        cmd = "tcpdump -i %s -c %s -nn -tttt 2>&1" % (iface, count)
+        if cnt > 0:
+            cmd = "timeout %d tcpdump -i %s -c %s -nn -tttt 2>&1" % (dur, iface, cnt)
+        else:
+            cmd = "timeout %d tcpdump -i %s -nn -tttt 2>&1" % (dur, iface)
     else:
-        cmd = "tshark -i %s -c %s 2>&1" % (iface, count)
-    print_status("Capturing...")
-    stdout, stderr, _ = run_command(cmd, timeout=60)
+        if cnt > 0:
+            cmd = "timeout %d tshark -i %s -c %s 2>&1" % (dur, iface, cnt)
+        else:
+            cmd = "timeout %d tshark -i %s 2>&1" % (dur, iface)
+    print_status("Capturing for up to %d seconds..." % dur)
+    stdout, stderr, _ = run_command(cmd, timeout=dur + 5)
     output = stdout if stdout else stderr
     if output:
         print(output)
+    else:
+        print_info("No packets captured. Try running as root or check interface name.")
 
 
 def _capture_to_file():
@@ -516,10 +530,15 @@ def _capture_to_file():
         return
     iface = get_user_input("Interface", "any")
     count = get_user_input("Packet count", "100")
+    duration = get_user_input("Max duration in seconds", "15")
     outfile = get_user_input("Output PCAP file", "/tmp/capture.pcap")
-    print_status("Capturing %s packets to %s..." % (count, outfile))
-    stdout, stderr, rc = run_command("tcpdump -i %s -c %s -w %s 2>&1" % (iface, count, outfile), timeout=120)
-    if rc == 0:
+    try:
+        dur = int(duration)
+    except ValueError:
+        dur = 15
+    print_status("Capturing up to %s packets to %s (max %ds)..." % (count, outfile, dur))
+    stdout, stderr, rc = run_command("timeout %d tcpdump -i %s -c %s -w %s 2>&1" % (dur, iface, count, outfile), timeout=dur + 5)
+    if rc == 0 or rc == 124:  # 124 = timeout reached (normal)
         print_info("Saved: %s" % outfile)
         stdout, _, _ = run_command("ls -lh %s" % outfile)
         if stdout: print_info(stdout.strip())
@@ -533,15 +552,23 @@ def _capture_filtered():
         print_error("tcpdump required.")
         return
     iface = get_user_input("Interface", "any")
-    count = get_user_input("Packet count", "50")
+    count = get_user_input("Packet count", "20")
+    duration = get_user_input("Max duration in seconds", "10")
     bpf = get_user_input("BPF filter (e.g. 'port 80', 'host 10.0.0.1', 'tcp')")
     if not bpf:
         print_error("No filter provided.")
         return
-    print_status("Capturing with filter: %s" % bpf)
-    stdout, stderr, _ = run_command("tcpdump -i %s -c %s -nn %s 2>&1" % (iface, count, bpf), timeout=60)
+    try:
+        dur = int(duration)
+    except ValueError:
+        dur = 10
+    print_status("Capturing with filter: %s (max %ds)" % (bpf, dur))
+    stdout, stderr, _ = run_command("timeout %d tcpdump -i %s -c %s -nn %s 2>&1" % (dur, iface, count, bpf), timeout=dur + 5)
     output = stdout if stdout else stderr
-    if output: print(output)
+    if output:
+        print(output)
+    else:
+        print_info("No packets matched filter. Try a broader filter or check interface.")
 
 
 def _analyze_pcap():
@@ -571,9 +598,14 @@ def _capture_http():
     require_root("HTTP capture")
     iface = get_user_input("Interface", "any")
     count = get_user_input("Packet count", "50")
-    print_status("Capturing HTTP traffic...")
+    duration = get_user_input("Max duration in seconds", "10")
+    try:
+        dur = int(duration)
+    except ValueError:
+        dur = 10
+    print_status("Capturing HTTP traffic (max %ds)..." % dur)
     stdout, stderr, _ = run_command(
-        "tcpdump -i %s -c %s -nn -A 'tcp port 80 or tcp port 443' 2>&1 | head -200" % (iface, count), timeout=60)
+        "timeout %d tcpdump -i %s -c %s -nn -A 'tcp port 80 or tcp port 443' 2>&1 | head -200" % (dur, iface, count), timeout=dur + 5)
     output = stdout if stdout else stderr
     if output: print(output)
 
@@ -586,8 +618,13 @@ def _capture_dns():
     require_root("DNS capture")
     iface = get_user_input("Interface", "any")
     count = get_user_input("Packet count", "30")
-    print_status("Capturing DNS queries...")
-    stdout, stderr, _ = run_command("tcpdump -i %s -c %s -nn 'port 53' 2>&1" % (iface, count), timeout=60)
+    duration = get_user_input("Max duration in seconds", "10")
+    try:
+        dur = int(duration)
+    except ValueError:
+        dur = 10
+    print_status("Capturing DNS queries (max %ds)..." % dur)
+    stdout, stderr, _ = run_command("timeout %d tcpdump -i %s -c %s -nn 'port 53' 2>&1" % (dur, iface, count), timeout=dur + 5)
     output = stdout if stdout else stderr
     if output: print(output)
 
