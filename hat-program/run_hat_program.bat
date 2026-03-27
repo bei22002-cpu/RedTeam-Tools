@@ -19,12 +19,12 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Check if Ubuntu is installed
-wsl -l -q 2>nul | findstr /i "Ubuntu" >nul 2>&1
+:: Check if Ubuntu is available by trying to run a command in it
+wsl -d Ubuntu echo "ok" >nul 2>&1
 if %errorlevel% neq 0 (
     echo.
-    echo  [ERROR] Ubuntu is not installed in WSL.
-    echo  Run windows_setup.bat first to install Ubuntu.
+    echo  [ERROR] Ubuntu is not available in WSL.
+    echo  Run windows_setup.bat as Administrator first.
     echo.
     pause
     exit /b 1
