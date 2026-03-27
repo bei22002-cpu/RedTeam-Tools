@@ -13,6 +13,7 @@ License: MIT - For educational and authorized use only.
 
 import sys
 import os
+import platform
 
 # Ensure modules directory is in path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -64,20 +65,21 @@ def show_system_info():
     """Display basic system information."""
     print_section("System Information")
 
-    stdout, _, _ = run_command("uname -snrm")
-    if stdout:
-        print_info(f"System: {stdout}")
+    print_info(f"System: {platform.system()} {platform.node()} {platform.release()} {platform.machine()}")
 
     stdout, _, _ = run_command("whoami")
     if stdout:
         print_info(f"User:   {stdout}")
 
     if check_root():
-        print_info("Privileges: ROOT")
+        print_info("Privileges: ROOT / Administrator")
     else:
         print_warning("Privileges: Standard user (some features may be limited)")
 
-    stdout, _, _ = run_command("ip -4 addr show scope global 2>/dev/null | grep inet | head -3")
+    if platform.system() == "Windows":
+        stdout, _, _ = run_command("ipconfig | findstr /i \"IPv4\"")
+    else:
+        stdout, _, _ = run_command("ip -4 addr show scope global 2>/dev/null | grep inet | head -3")
     if stdout:
         for line in stdout.strip().split("\n"):
             ip_info = line.strip()

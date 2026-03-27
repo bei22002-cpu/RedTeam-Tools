@@ -77,8 +77,16 @@ def check_tool(tool_name):
 
 
 def check_root():
-    """Check if running as root."""
-    return os.geteuid() == 0
+    """Check if running as root/admin."""
+    try:
+        return os.geteuid() == 0
+    except AttributeError:
+        # Windows doesn't have geteuid - check for admin via ctypes
+        try:
+            import ctypes
+            return ctypes.windll.shell32.IsUserAnAdmin() != 0
+        except Exception:
+            return False
 
 
 def require_root(func_name):
