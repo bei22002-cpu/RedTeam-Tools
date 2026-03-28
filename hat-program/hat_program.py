@@ -50,6 +50,7 @@ from modules.ad_ldap import ad_ldap_tools
 from modules.advanced_exploitation import advanced_exploitation
 from modules.social_engineering import social_engineering
 from modules.api_security import api_security_scanner
+from modules.ai_assistant import ai_assistant
 
 
 MAIN_BANNER = f"""
@@ -66,6 +67,8 @@ MAIN_BANNER = f"""
     {Colors.GREEN}[TOOLS]{Colors.RESET} Vuln Scanner | Web Scanner | Crypto | OSINT | Recon | IR | Reports | Dashboard
 
     {Colors.RED}[ADV]{Colors.RESET} Bluetooth | WiFi | Forensics | Evasion | AD/LDAP | Exploitation | SE | API
+
+    {Colors.CYAN}[AI]{Colors.RESET} ctOS AI Assistant - Ask questions, upgrade skills, get help
 
     {Colors.YELLOW}For educational and authorized use only.{Colors.RESET}
 """
@@ -166,6 +169,7 @@ def main():
         f"{Colors.RED}Exploitation{Colors.RESET}       - Buffer Overflow, Shellcode, ROP, Fuzzing",
         f"{Colors.RED}Social Engineering{Colors.RESET} - Phishing, Pretexting, USB Payloads, Vishing",
         f"{Colors.CYAN}API Security{Colors.RESET}       - REST/GraphQL, JWT, SQLi, CORS, SSRF, Fuzzing",
+        f"{Colors.CYAN}{Colors.BOLD}ctOS AI Assistant{Colors.RESET}  - Ask Questions, Skill Upgrades, Program Help",
         "System Information",
         "About",
     ]
@@ -217,8 +221,10 @@ def main():
             elif choice == 20:
                 api_security_scanner()
             elif choice == 21:
-                show_system_info()
+                ai_assistant()
             elif choice == 22:
+                show_system_info()
+            elif choice == 23:
                 about_screen()
         except KeyboardInterrupt:
             print(f"\n{Colors.YELLOW}Interrupted. Returning to main menu...{Colors.RESET}")
